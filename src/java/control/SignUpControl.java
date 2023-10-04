@@ -49,7 +49,7 @@ public class SignUpControl extends HttpServlet {
 
             } else {
                 // đẩy về trang register.jsp
-                dao.singup( user, pass, gmail);
+//                dao.singup( user, pass, gmail);
                 response.sendRedirect("home");
             }
 

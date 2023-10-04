@@ -10,6 +10,7 @@ import entity.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,41 @@ public class DAO {
     PreparedStatement ps = null; //ném câu lệnh query 
     ResultSet rs = null; // nhận kết quả trả về
 
+    public ArrayList<Accounts> selectAllAccounts() {
+        ArrayList<Accounts> listAccounts = new ArrayList<Accounts>();
+        String query = "SELECT * FROM Accounts";
+
+        try {
+            // bước 1: kết nối đến CSDL
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                listAccounts.add(new Accounts(rs.getString(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4),
+                    rs.getInt(5),
+                    rs.getString(6)));
+
+            }
+        } catch (Exception ex) {
+            // Thông báo lỗi ra 
+            ex.printStackTrace();
+        }
+        return listAccounts;
+
+    }
+
+//      public static void main(String[] args) {
+//        DBContext.setConnection();
+//        DAO dao = new DAO();
+//        List<Accounts> listAccounts = dao.selectAllAccounts();
+//        for (Accounts accounts : listAccounts) {
+//            System.out.println(accounts);
+//
+//        }
+//    }
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
         String query = "select * from Product";
@@ -190,30 +226,30 @@ public class DAO {
         return null;
 
     }
-    public static void main(String[] args) {
-    // Mở kết nối đến cơ sở dữ liệu
-    DBContext.setConnection();
-    
-    DAO dao = new DAO();
-    
-    // Thay thế "your_product_id_here" bằng mã sản phẩm (Product ID) mà bạn muốn truy vấn
-    String productId = "2";
-    
-    Product product = dao.getProductByID(productId);
-    
-    if (product != null) {
-        System.out.println("Thông tin sản phẩm:");
-        System.out.println("ID: " + product.getId());
-        System.out.println("Tên sản phẩm: " + product.getName());
-        System.out.println("Giá: " + product.getPrice());
-        System.out.println("Mô tả: " + product.getDescription());
-    } else {
-        System.out.println("Không tìm thấy sản phẩm có ID: " + productId);
-    }
-    
-    // Đóng kết nối đến cơ sở dữ liệu
-    DBContext.closeConnection();
-}
+//    public static void main(String[] args) {
+//    // Mở kết nối đến cơ sở dữ liệu
+//    DBContext.setConnection();
+//    
+//    DAO dao = new DAO();
+//    
+//    // Thay thế "your_product_id_here" bằng mã sản phẩm (Product ID) mà bạn muốn truy vấn
+//    String productId = "2";
+//    
+//    Product product = dao.getProductByID(productId);
+//    
+//    if (product != null) {
+//        System.out.println("Thông tin sản phẩm:");
+//        System.out.println("ID: " + product.getId());
+//        System.out.println("Tên sản phẩm: " + product.getName());
+//        System.out.println("Giá: " + product.getPrice());
+//        System.out.println("Mô tả: " + product.getDescription());
+//    } else {
+//        System.out.println("Không tìm thấy sản phẩm có ID: " + productId);
+//    }
+//    
+//    // Đóng kết nối đến cơ sở dữ liệu
+//    DBContext.closeConnection();
+//}
 
     public Accounts login(String user, String pass) {
         String query = "select * from accounts\n"
@@ -233,7 +269,7 @@ public class DAO {
                     rs.getInt(4),
                     rs.getInt(5),
                     rs.getString(6));
-                    
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -279,21 +315,74 @@ public class DAO {
         return null;
     }
 
-    public void singup(String user, String pass, String gmail) {
-        String query = "  insert into accounts\n"
-            + "  values ( ?,?,0,0,0,0,0,0,0,0,0,?)";
-        try {
-            Connection conn = DBContext.getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            ps.setString(3, gmail);
-            ps.executeUpdate();
+    public int singup(Accounts accounts) {
+    int result = 0;
+    Connection conn = null;
+    PreparedStatement ps = null;
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    try {
+        conn = DBContext.getConnection();
+        String query = "INSERT INTO accounts (user, pass, gmail) VALUES (?,?,?)";
+        ps = conn.prepareStatement(query);
+        ps.setString(1, accounts.getUser());
+        ps.setString(2, accounts.getPass());
+        ps.setString(3, accounts.getGmail());
+
+        // Bước 3: thực thi câu lệnh SQL
+        result = ps.executeUpdate();
+
+        // Bước 4:
+        System.out.println("Bạn đã thực thi: " + query);
+        System.out.println("Có " + result + " dòng bị thay đổi!");
+
+    } catch (Exception ex) {
+        // Xử lý lỗi
+        ex.printStackTrace();
+    } finally {
+        // Đảm bảo rằng PreparedStatement được đóng ngay cả khi xảy ra lỗi
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
+        // Đảm bảo rằng kết nối được đóng ngay cả khi xảy ra lỗi
+        DBContext.closeConnection();
     }
 
+    return result;
+}
+
+
+
+    public static void main(String[] args) {
+    try {
+        // Tạo một đối tượng Accounts mới
+        Accounts newAccount = new Accounts();
+        newAccount.setUser("vanhau");
+        newAccount.setPass("123");
+        newAccount.setGmail("nguyenuser@example.com");
+        newAccount.setRenter(1); // Đặt giá trị cho renter
+        newAccount.setLessor(0); // Đặt giá trị cho lessor
+
+        // Tạo một đối tượng DAO để thực hiện việc thêm tài khoản
+        DAO dao = new DAO();
+
+        // Gọi phương thức singup để thêm tài khoản
+        int result = dao.singup(newAccount);
+
+        if (result > 0) {
+            System.out.println("Thêm tài khoản thành công.");
+        } else {
+            System.out.println("Thêm tài khoản thất bại.");
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    } finally {
+        // Đảm bảo rằng kết nối được đóng ngay cả khi xảy ra lỗi
+        DBContext.closeConnection();
+    }
+}
 }

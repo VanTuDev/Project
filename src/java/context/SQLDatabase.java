@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public abstract class SQLDatabase {
 
-    private Connection conn;
+    public Connection conn;
 
     /**
      * Create connection when calling to this constructor
