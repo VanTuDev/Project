@@ -1,0 +1,135 @@
+
+CREATE TABLE tacgia (
+    matacgia VARCHAR(10) PRIMARY KEY,
+    hovaten NVARCHAR(MAX) NULL,
+    ngaysinh DATE NULL,
+    tieusu NVARCHAR(MAX)
+);
+INSERT INTO tacgia (matacgia, hovaten, ngaysinh, tieusu)
+VALUES
+    ('TG001', N'Văn Tèo', '1990-05-15', N'Tác giả nổi tiếng về văn học'),
+    ('TG002', N'Thị Nở', '1985-11-30', N'Tác giả chuyên viết sách khoa học'),
+    ('TG003', N'Nguyễn Văn Tú', '2003-02-16', N'Tác giả văn bản lớn');
+
+
+
+
+
+
+CREATE TABLE theloai (
+    matheloai VARCHAR(50) primary key,
+    tentheloai NVARCHAR(255) NULL, 
+);
+
+INSERT INTO theloai (matheloai, tentheloai)
+VALUES
+    ('TL001', N'Văn học'),
+    ('TL002', N'Khoa học'),
+    ('TL003', N'Truyện tranh');
+
+
+
+
+
+CREATE TABLE sanpham (
+    masanpham VARCHAR(50) PRIMARY KEY,
+    tensanpham NVARCHAR(512) NULL,
+    matacgia VARCHAR(10),
+    FOREIGN KEY (matacgia) REFERENCES tacgia(matacgia),
+    namxuatban INT NULL,
+    gianhap FLOAT,
+    giagoc FLOAT, 
+    giaban FLOAT,
+    soluong INT NULL,
+    matheloai VARCHAR(50),
+    FOREIGN KEY (matheloai) REFERENCES theloai(matheloai),
+    ngonngu VARCHAR(50) NULL,
+    mota NVARCHAR(MAX) NULL
+);
+INSERT INTO sanpham (masanpham, tensanpham, matacgia, namxuatban, gianhap, giagoc, giaban, soluong, matheloai, ngonngu, mota)
+VALUES
+    ('SP001', N'Truyện Doremon', 'TG001', 2020, 4.5, 5.0, 7.0, 231, 'TL001', 'VietNam', N'Truyện tranh cho trẻ em, xuất bản năm 1999'),
+    ('SP002', N'Truyện Conan', 'TG002', 2021, 3.0, 3.5, 4.5, 721, 'TL002', 'English', N'Truyện  tranh trinh thám, không thích hợp cho trẻ em'),
+    ('SP003', N'Truyện 7 Viên Ngọc Rồng', 'TG003', 2019, 120.0, 150.0, 180.0, 60, 'TL003', 'English', N'Truyện tranh bạo lực, dành cho trẻ em trên 16 tuổi');
+
+
+
+
+
+	CREATE TABLE khachhang (
+    makhachhang VARCHAR(50) NOT NULL PRIMARY KEY,
+    tendangnhap VARCHAR(255) NOT NULL,
+    matkhau VARCHAR(512) NOT NULL,
+    hovaten NVARCHAR(512) NOT NULL,
+    gioitinh NVARCHAR(10) NULL,
+    diachi NVARCHAR(512) NULL,
+    diachinhanhang NVARCHAR(512) NULL,
+    diachimuahang NVARCHAR(512) NULL,
+    ngaysinh DATE NULL,
+    sodienthoai VARCHAR(13) NULL,
+    email VARCHAR(255) NULL,
+    dangkynhanbangtin TINYINT
+);
+
+INSERT INTO khachhang (makhachhang, tendangnhap, matkhau, hovaten, gioitinh, diachi, diachinhanhang, diachimuahang, ngaysinh, sodienthoai, email, dangkynhanbangtin)
+VALUES
+    ('KH001', 'vantu', '123', N'Nguyễn Văn Tú', N'Nam', N'Hòa Quý, Đà Nẵng', N'Cổng sau, Đại Học FPT', N'Quận Bình Thạnh, TP Hồ Chí Minh', '2003-05-15', '035659416', 'vantu.dev@gmail.com', 1),
+    ('KH002', 'tramy', '123', N'Nguyễn Thị Trà My', N'Nữ', N'Ngũ Hàng Sơn Đà Nẵng', N'Cổng sau, THPT FPT', N'Đống Đa, Thủ Đô Hà Nội', '2001-11-30', '0987654321', 'TraMy.BA@gmail.com', 0),
+    ('KH003', 'giabao', '123', N'Phan Gia Bảo', N'Nam', N'FPT Plaza, Ngũ Hành Sơn, Đà Nẵng', N'Tòa A FPT Plaza !	', N'BigC Đà Nẵng, TP Đà Nẵng', '2000-03-20', '02', 'Giabao.fudn@gmail.com', 1);
+
+
+
+
+
+CREATE TABLE donhang (
+    madonhang VARCHAR(50) NOT NULL,
+    makhachhang VARCHAR(50) NOT NULL,
+    diachimuahang NVARCHAR(512) NOT NULL,
+    diachinhanhang NVARCHAR(512) NOT NULL,
+    hinhthucthanhtoan NVARCHAR(512) NOT NULL,
+    trangthaithanhtoan NVARCHAR(255) NOT NULL,
+    sotiendathanhtoan FLOAT NOT NULL,
+    sotienconthieu FLOAT NULL,
+    ngaydathang DATE NOT NULL,
+    ngaygiaohang DATE NULL,
+    PRIMARY KEY (madonhang),
+    CONSTRAINT FK_khachhang FOREIGN KEY (makhachhang) REFERENCES khachhang (makhachhang) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE INDEX idx_makhachhang ON donhang (makhachhang);
+
+INSERT INTO donhang (madonhang, makhachhang, diachimuahang, diachinhanhang, hinhthucthanhtoan, trangthaithanhtoan, sotiendathanhtoan, sotienconthieu, ngaydathang, ngaygiaohang)
+VALUES
+    ('DH001', 'KH001', N'Quận Bình Thạnh, TP Hồ Chí Minh', N'Cổng sau, Đại Học FPT', N'Thanh toán bằng thẻ', N'Đã thanh toán', 7.0, 0.0, '2023-10-01', '2023-10-10'),
+    ('DH002', 'KH002', N'Đống Đa, Thủ Đô Hà Nội', N'Cổng sau, THPT FPT', N'Thanh toán khi nhận hàng', N'Đã thanh toán', 4.5, 0.0, '2023-09-28', '2023-10-05'),
+    ('DH003', 'KH003',N'BigC Đà Nẵng, TP Đà Nẵng',N'Tòa A FPT Plaza !', N'Thanh toán bằng chuyển khoản', N'Chưa thanh toán', 0.0, 7.5, '2023-09-30', NULL);
+
+
+
+
+
+
+CREATE TABLE chitietdonhang (
+    machitietdonhang VARCHAR(58) NOT NULL PRIMARY KEY,
+    madonhang VARCHAR(50) NOT NULL,
+    masanpham VARCHAR(50) NOT NULL,
+    soluong INT,
+    giagoc FLOAT,
+    giangia FLOAT,
+    giaban FLOAT,
+    thueVAT FLOAT,
+    tongtien FLOAT,
+    INDEX madonhang (madonhang),
+    INDEX masanpham (masanpham),
+    FOREIGN KEY (madonhang) REFERENCES donhang (madonhang),
+    FOREIGN KEY (masanpham) REFERENCES sanpham (masanpham)
+); 
+
+
+INSERT INTO chitietdonhang (machitietdonhang, madonhang, masanpham, soluong, giagoc, giangia, giaban, thueVAT, tongtien)
+VALUES
+    ('CTDH001', 'DH001', 'SP001', 2, 5.0, 0.0, 7.0, 0.1, NULL),
+    ('CTDH002', 'DH002', 'SP002', 3, 3.5, 0.0, 4.5, 0.1, NULL),
+    ('CTDH003', 'DH003', 'SP003', 1, 150.0, 0.0, 180.0, 0.1, NULL);
+
+
