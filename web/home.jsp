@@ -100,7 +100,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand mr-auto" href="#"><img src="img/logo@2x.png" height="30px"
+                <a class="navbar-brand mr-auto" href="#"><img src="img/Asset 1@2x.png" height="30px"
                                                               width="19,69px"></a>
                 <div class="collapse navbar-collapse" id="Navbar">
                     <ul class="navbar-nav mr-auto ">
