@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package context;
 
 //import context.database.ProductDAO;
@@ -14,13 +11,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBContext {
+
     private static String server = "localhost";
     private static String database = "Wish";
     private static String username = "sa";
     private static String password = "123";
-    
+
     private static Connection conn;
-    
+
     public static void setConnection() {
         try {
             Class<?> clazz = Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -34,7 +32,7 @@ public class DBContext {
     }
 
     public static void closeConnection() {
-        if(conn != null) {
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException ex) {
@@ -43,19 +41,26 @@ public class DBContext {
             conn = null;
         }
     }
-    
+
+    public static boolean testConnection() {
+        setConnection();
+        if (conn != null) {
+            closeConnection();
+            return true;
+        }
+        return false;
+    }
+
     public static Connection getConnection() {
         return conn;
     }
-    
+
     public static void main(String[] args) {
-        setConnection();
-        
-//        ProductDAO product = new ProductDAO(conn);
-//        product.add(new Product(0, "Name", "Link", 10.2, "Title", "Des"));
-      
-        
-        closeConnection();
+        if (testConnection()) {
+            System.out.println("Kết nối với cơ sở dữ liệu thành công.");
+        } else {
+            System.out.println("Kết nối với cơ sở dữ liệu không thành công.");
+        }
     }
 
 }

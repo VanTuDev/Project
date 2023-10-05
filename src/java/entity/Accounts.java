@@ -28,8 +28,10 @@ public class Accounts {
         this.renter = renter;
         this.lessor = lessor;
         this.admins = admins;
-        
+        this.gmail = gmail;
     }
+
+  
 
     public String getUser() {
         return user;
@@ -80,9 +82,12 @@ public class Accounts {
     }
     
 
+ 
+
     @Override
     public String toString() {
-        return "Accounts{" + "user=" + user + ", pass=" + pass + ", renter=" + renter + ", lessor=" + lessor + ", admins=" + admins + '}';
+        return "Accounts{" + "user=" + user + ", pass=" + pass + ", renter=" + renter + ", lessor=" + lessor + ", admins=" + admins + ", gmail=" + gmail + '}';
     }
+   
 
 }
