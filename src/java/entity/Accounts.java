@@ -19,7 +19,7 @@ public class Accounts {
     private int admins;
     private String img;
     private String fullname;
-    private Date dob;
+    private String dob;
     private String gender;
     private String numphone;
     private String cccd;
@@ -28,7 +28,10 @@ public class Accounts {
     private String dot;
     private String wot;
 
-    public Accounts(String user, String pass, int renter, int lessor, int admins, String img, String fullname, Date dob, String gender, String numphone, String cccd, String gmail, String roles, String dot, String wot) {
+    public Accounts() {
+    }
+
+    public Accounts(String user, String pass, int renter, int lessor, int admins, String img, String fullname, String dob, String gender, String numphone, String cccd, String gmail, String roles, String dot, String wot) {
         this.user = user;
         this.pass = pass;
         this.renter = renter;
@@ -46,80 +49,8 @@ public class Accounts {
         this.wot = wot;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getNumphone() {
-        return numphone;
-    }
-
-    public void setNumphone(String numphone) {
-        this.numphone = numphone;
-    }
-
-    public String getCccd() {
-        return cccd;
-    }
-
-    public void setCccd(String cccd) {
-        this.cccd = cccd;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public String getDot() {
-        return dot;
-    }
-
-    public void setDot(String dot) {
-        this.dot = dot;
-    }
-
-    public String getWot() {
-        return wot;
-    }
-
-    public void setWot(String wot) {
-        this.wot = wot;
-    }
-   
-
-  
+    
+    
 
     public String getUser() {
         return user;
@@ -161,6 +92,47 @@ public class Accounts {
         this.admins = admins;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+   
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getNumphone() {
+        return numphone;
+    }
+
+    public void setNumphone(String numphone) {
+        this.numphone = numphone;
+    }
+
+    public String getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(String cccd) {
+        this.cccd = cccd;
+    }
+
     public String getGmail() {
         return gmail;
     }
@@ -169,15 +141,61 @@ public class Accounts {
         this.gmail = gmail;
     }
 
-    @Override
-    public String toString() {
-        return "Accounts{" + "user=" + user + ", pass=" + pass + ", renter=" + renter + ", lessor=" + lessor + ", admins=" + admins + ", img=" + img + ", fullname=" + fullname + ", dob=" + dob + ", gender=" + gender + ", numphone=" + numphone + ", cccd=" + cccd + ", gmail=" + gmail + ", roles=" + roles + ", dot=" + dot + ", wot=" + wot + '}';
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public String getDot() {
+        return dot;
+    }
+
+    public void setDot(String dot) {
+        this.dot = dot;
+    }
+
+    public String getWot() {
+        return wot;
+    }
+
+    public void setWot(String wot) {
+        this.wot = wot;
     }
     
 
- 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Accounts{");
+        sb.append("user=").append(user);
+        sb.append(", pass=").append(pass);
+        sb.append(", renter=").append(renter);
+        sb.append(", lessor=").append(lessor);
+        sb.append(", admins=").append(admins);
+        sb.append(", img=").append(img);
+        sb.append(", fullname=").append(fullname);
+        sb.append(", gender=").append(gender);
+        sb.append(", numphone=").append(numphone);
+        sb.append(", cccd=").append(cccd);
+        sb.append(", gmail=").append(gmail);
+        sb.append(", roles=").append(roles);
+        sb.append(", dot=").append(dot);
+        sb.append(", wot=").append(wot);
+        sb.append('}');
+        return sb.toString();
+    }
 
-   
-   
+    public String getDob() {
+        return dob;
+    }
 
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    
+    
 }

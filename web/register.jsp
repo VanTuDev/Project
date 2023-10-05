@@ -33,9 +33,9 @@
                                 
                                 <div class="form-group">
                                     <label for="gender">Gender:</label>
-                                    <select class="form-control" id="gender" name="gender" required>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                    <select class="form-control" name="gender" required>
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
                                         <option value="other">Other</option>
                                     </select>
                                 </div>
@@ -60,35 +60,35 @@
                                 <!--Thêm dropdown cho loại người dùng--> 
                                 <div class="form-group">
                                     <label for="user_type">Choose User Type:</label>
-                                    <select class="form-control" id="user_type" name="user_type" required>
-                                        <option value="tenant">Người Thuê</option>
-                                        <option value="landlord">Người Cho Thuê</option>
+                                    <select class="form-control" id="user_type" name="roles" required>
+                                        <option value="1">Người Thuê</option>
+                                        <option value="2">Người Cho Thuê</option>
                                     </select>
                                 </div>
                                 <!-- Thêm thông tin của người dùng -->
                                 <div class="form-group">
                                     <label for="phone">Số điện thoại:</label>
-                                    <input type="tel" class="form-control"  name="phone" required>
+                                    <input type="tel" class="form-control"  name="numphone" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="DOB">Ngày sinh:</label>
-                                    <input type="date" class="form-control"  name="DOB" required>
+                                    <input type="date" class="form-control"  name="ngaysinh" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="CCCD">CCCD:</label>
-                                    <input type="text" class="form-control"  name="CCCD" required>
+                                    <input type="text" class="form-control"  name="cccd" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="DOT">Ngày cấp cccd:</label>
-                                    <input type="date" class="form-control"  name="DOT" required>
+                                    <input type="date" class="form-control"  name="dot" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="WOT">Nơi cấp cccd:</label>
-                                    <input type="text" class="form-control"  name="WOT" required>
+                                    <input type="text" class="form-control"  name="wot" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">Register</button>

@@ -9,6 +9,7 @@ import dao.DAO;
 import entity.Accounts;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +26,23 @@ public class SignUpControl extends HttpServlet {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         String gmail = request.getParameter("gmail");
+        String fullname = request.getParameter("fullname");
+        String gender = request.getParameter("gender");
+        String cccd = request.getParameter("cccd");
+        String numphone = request.getParameter("numphone");
+        String roles = request.getParameter("roles");
+        String dot = request.getParameter("dot");
+        String wot = request.getParameter("wot");
+        
         System.out.println(user);
         System.out.println(pass);
         System.out.println(gmail);
+        System.out.println( fullname);
+        System.out.println(gender);
+        System.out.println(cccd);
+        System.out.println(roles);
+        System.out.println(dot);
+        System.out.println(wot);
 
         String repass = request.getParameter("repass");
         if (!pass.equals(repass)) {
@@ -38,7 +53,7 @@ public class SignUpControl extends HttpServlet {
             
             if (accounts == null) {
                 // được đăng kí
-                Accounts acc = new Accounts(user, pass, 0, 0, 0, gmail);
+                Accounts acc = new Accounts(user, pass, 0, 0, 0, wot, fullname, dot, gender, numphone, cccd, gmail, roles, dot, wot);
                 dao.singup(acc);
                 response.sendRedirect("home");
 
