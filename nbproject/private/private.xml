@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/U:/CODE%20CN5/Project/web/datlich.jsp</file>
-            <file>file:/U:/CODE%20CN5/Project/web/detail.jsp</file>
+            <file>file:/U:/CODE%20CN5/Project/web/register.jsp</file>
+            <file>file:/U:/CODE%20CN5/Project/src/java/dao/DAO.java</file>
+            <file>file:/U:/CODE%20CN5/Project/src/java/control/SignUpControl.java</file>
+            <file>file:/U:/CODE%20CN5/Project/src/java/entity/Accounts.java</file>
         </group>
     </open-files>
 </project-private>

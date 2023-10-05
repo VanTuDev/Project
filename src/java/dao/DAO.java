@@ -298,12 +298,14 @@ public class DAO {
 //    }
 //}
     public Accounts checkAccountsExits(String user) {
-        String query = "select * from accounts\n"
-            + " where [user] = ?\n";
-
+        Connection conn = null;
+        PreparedStatement ps = null;
         try {
-            Connection conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(query);
+            String query = "select * from accounts\n"
+                + " where [user] = ?\n";
+
+            conn = DBContext.getConnection();
+            ps = conn.prepareStatement(query);
             ps.setString(1, user);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -320,19 +322,37 @@ public class DAO {
         return null;
     }
 
-   
-
+//    public static void main(String[] args) {
+//        DBContext.setConnection();
+//        DAO dao = new DAO();
+//        String user = "vantu"; // Thay thế bằng tên đăng nhập thực tế của bạn
+//        Accounts accounts = dao.checkAccountsExits(user);
+//        if (accounts != null) {
+//            System.out.println("thành công!");
+//            System.out.println("Tài Khoản này có trong hệ thống:");
+//            System.out.println("Tên đăng nhập: " + accounts.getUser());
+//            System.out.println(" Mật khẩu là : " + accounts.getPass());
+//            System.out.println("Renter: " + accounts.getRenter());
+//            System.out.println("Lessor: " + accounts.getLessor());
+//            
+//        } else {
+//            System.out.println("Đăng nhập thất bại");
+//        }
+//    }
     // Đây là hàm checkAccountsExits được đưa vào từ mã trước đó
     public int singup(Accounts accounts) {
         int listAccounts = 0;
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
-            String query = "INSERT INTO accounts ([user], pass, gmail) VALUES (?,?,?)";
+            String query = "  INSERT INTO accounts ([user], pass, renter, lessor, admins, gmail)\n"
+                + "  VALUES (?,?,0,0,0,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, accounts.getUser());
             ps.setString(2, accounts.getPass());
             ps.setString(3, accounts.getGmail());
+            System.out.println(accounts.getGmail());
+            System.out.println(accounts.getUser());
 
             // Bước 3: thực thi câu lệnh SQL
             listAccounts = ps.executeUpdate();
@@ -353,29 +373,28 @@ public class DAO {
         return listAccounts;
     }
 
-//    public static void main(String[] args) {
-//        try {
-//            DAO dao = new DAO();
-//            Accounts accounts = new Accounts("Quang", "123", 0, 0, 1, "VanHei@gmail.com");
-//
-//            // Tạo kết nối đến CSDL
-//            DBContext.setConnection();
-//
-//            // Gọi phương thức insert
-//            int singup = dao.singup(accounts);
-//
-//            // Kiểm tra kết quả
-//            if (singup > 0) {
-//                System.out.println("Thêm thành công.");
-//            } else {
-//                System.out.println("Thêm không thành công.");
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        } finally {
-//            // Đảm bảo đóng kết nối sau khi hoàn thành
-//            DBContext.closeConnection();
-//        }
-//    }
+    public static void main(String[] args) {
+        try {
+            DAO dao = new DAO();
+            Accounts accounts = new Accounts("Quang", "123", 0, 0, 0, "VanHei@gmail.com");
 
+            // Tạo kết nối đến CSDL
+            DBContext.setConnection();
+
+            // Gọi phương thức insert
+            int singup = dao.singup(accounts);
+
+            // Kiểm tra kết quả
+            if (singup > 0) {
+                System.out.println("Thêm thành công.");
+            } else {
+                System.out.println("Thêm không thành công.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            // Đảm bảo đóng kết nối sau khi hoàn thành
+            DBContext.closeConnection();
+        }
+    }
 }

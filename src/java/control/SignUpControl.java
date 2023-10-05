@@ -15,42 +15,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "SignUpControl", urlPatterns = {"/signup"})
 public class SignUpControl extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         DBContext.setConnection();
         response.setContentType("text/html;charset=UTF-8");
         String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
         String gmail = request.getParameter("gmail");
-        String pass = request.getParameter("pass"); 
+        System.out.println(user);
+        System.out.println(pass);
+        System.out.println(gmail);
+
         String repass = request.getParameter("repass");
         if (!pass.equals(repass)) {
             request.getParameter("login.jsp");
         } else {
             DAO dao = new DAO();
-            Accounts Accounts = dao.checkAccountsExits(user);
-            if (Accounts == null) {
+            Accounts accounts = dao.checkAccountsExits(user);
+            
+            if (accounts == null) {
                 // được đăng kí
+                Accounts acc = new Accounts(user, pass, 0, 0, 0, gmail);
+                dao.singup(acc);
+                response.sendRedirect("home");
 
             } else {
                 // đẩy về trang register.jsp
-                dao.singup(Accounts);
-                response.sendRedirect("home");
+
+                response.sendRedirect("login.jsp");
             }
 
         }
