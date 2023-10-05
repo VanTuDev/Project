@@ -303,11 +303,16 @@ public class DAO {
 
         try {
             Connection conn = DBContext.getConnection();
-            ps = conn.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, user);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return new Accounts(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6));
+                return new Accounts(rs.getString(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4),
+                    rs.getInt(5),
+                    rs.getString(6));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -315,74 +320,62 @@ public class DAO {
         return null;
     }
 
+   
+
+    // Đây là hàm checkAccountsExits được đưa vào từ mã trước đó
     public int singup(Accounts accounts) {
-    int result = 0;
-    Connection conn = null;
-    PreparedStatement ps = null;
+        int listAccounts = 0;
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String query = "INSERT INTO accounts ([user], pass, gmail) VALUES (?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, accounts.getUser());
+            ps.setString(2, accounts.getPass());
+            ps.setString(3, accounts.getGmail());
 
-    try {
-        conn = DBContext.getConnection();
-        String query = "INSERT INTO accounts (user, pass, gmail) VALUES (?,?,?)";
-        ps = conn.prepareStatement(query);
-        ps.setString(1, accounts.getUser());
-        ps.setString(2, accounts.getPass());
-        ps.setString(3, accounts.getGmail());
+            // Bước 3: thực thi câu lệnh SQL
+            listAccounts = ps.executeUpdate();
 
-        // Bước 3: thực thi câu lệnh SQL
-        result = ps.executeUpdate();
+            // Bước 4:
+            System.out.println("Bạn đã thực thi: " + query);
+            System.out.println("Có " + listAccounts + " dòng bị thay đổi!");
 
-        // Bước 4:
-        System.out.println("Bạn đã thực thi: " + query);
-        System.out.println("Có " + result + " dòng bị thay đổi!");
-
-    } catch (Exception ex) {
-        // Xử lý lỗi
-        ex.printStackTrace();
-    } finally {
-        // Đảm bảo rằng PreparedStatement được đóng ngay cả khi xảy ra lỗi
-        if (ps != null) {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DBContext.closeConnection();
+        } catch (Exception ex) {
+            // Xử lý lỗi
+            ex.printStackTrace();
+        } finally {
+            // Đảm bảo rằng kết nối được đóng ngay cả khi xảy ra lỗi
+            DBContext.closeConnection();
         }
 
-        // Đảm bảo rằng kết nối được đóng ngay cả khi xảy ra lỗi
-        DBContext.closeConnection();
+        return listAccounts;
     }
 
-    return result;
-}
+//    public static void main(String[] args) {
+//        try {
+//            DAO dao = new DAO();
+//            Accounts accounts = new Accounts("Quang", "123", 0, 0, 1, "VanHei@gmail.com");
+//
+//            // Tạo kết nối đến CSDL
+//            DBContext.setConnection();
+//
+//            // Gọi phương thức insert
+//            int singup = dao.singup(accounts);
+//
+//            // Kiểm tra kết quả
+//            if (singup > 0) {
+//                System.out.println("Thêm thành công.");
+//            } else {
+//                System.out.println("Thêm không thành công.");
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            // Đảm bảo đóng kết nối sau khi hoàn thành
+//            DBContext.closeConnection();
+//        }
+//    }
 
-
-
-    public static void main(String[] args) {
-    try {
-        // Tạo một đối tượng Accounts mới
-        Accounts newAccount = new Accounts();
-        newAccount.setUser("vanhau");
-        newAccount.setPass("123");
-        newAccount.setGmail("nguyenuser@example.com");
-        newAccount.setRenter(1); // Đặt giá trị cho renter
-        newAccount.setLessor(0); // Đặt giá trị cho lessor
-
-        // Tạo một đối tượng DAO để thực hiện việc thêm tài khoản
-        DAO dao = new DAO();
-
-        // Gọi phương thức singup để thêm tài khoản
-        int result = dao.singup(newAccount);
-
-        if (result > 0) {
-            System.out.println("Thêm tài khoản thành công.");
-        } else {
-            System.out.println("Thêm tài khoản thất bại.");
-        }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    } finally {
-        // Đảm bảo rằng kết nối được đóng ngay cả khi xảy ra lỗi
-        DBContext.closeConnection();
-    }
-}
 }
