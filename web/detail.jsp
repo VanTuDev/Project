@@ -86,7 +86,7 @@
                                             </div> <!-- col.// -->
                                         </div> <!-- row.// -->
                                         <hr>
-                                        <a href="#" class="btn btn-lg btn-primary text-uppercase"> Booking </a>
+                                        <a href="payment" class="btn btn-lg btn-primary text-uppercase"> Booking </a>
                                         <a href="datlich"  class="btn btn-lg btn-outline-primary text-uppercase">
                                             <i class="fas fa-shopping-cart"></i> Đặt Lịch  </a>
                                     </article> <!-- card-body.// -->

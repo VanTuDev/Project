@@ -35,7 +35,16 @@ public class DAO {
                     rs.getInt(3),
                     rs.getInt(4),
                     rs.getInt(5),
-                    rs.getString(6)));
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13),
+                    rs.getString(14),
+                    rs.getString(15)));
 
             }
         } catch (Exception ex) {
@@ -264,11 +273,20 @@ public class DAO {
 
             while (rs.next()) {
                 return new Accounts(rs.getString(1),
-                    rs.getString(2),
+                    rs.getString(1),
                     rs.getInt(3),
                     rs.getInt(4),
                     rs.getInt(5),
-                    rs.getString(6));
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13),
+                    rs.getString(14),
+                    rs.getString(15));
 
             }
         } catch (Exception ex) {
@@ -310,11 +328,20 @@ public class DAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 return new Accounts(rs.getString(1),
-                    rs.getString(2),
+                    rs.getString(1),
                     rs.getInt(3),
                     rs.getInt(4),
                     rs.getInt(5),
-                    rs.getString(6));
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13),
+                    rs.getString(14),
+                    rs.getString(15));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -345,14 +372,22 @@ public class DAO {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
-            String query = "  INSERT INTO accounts ([user], pass, renter, lessor, admins, gmail)\n"
-                + "  VALUES (?,?,0,0,0,?)";
+            String query = "  INSERT INTO accounts ([user],fullname,gender,gmail,pass,roles,numphone,cccd,dot,wot)\n"
+                + "  VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, accounts.getUser());
-            ps.setString(2, accounts.getPass());
-            ps.setString(3, accounts.getGmail());
+            ps.setString(2, accounts.getFullname());
+            ps.setString(3, accounts.getGender());
+            ps.setString(4, accounts.getGmail());
+            ps.setString(5, accounts.getPass());
+            ps.setString(6, accounts.getRoles());
+            ps.setString(7, accounts.getNumphone());
+            ps.setString(8, accounts.getCccd());
+            ps.setString(9, accounts.getDot());
+            ps.setString(10, accounts.getWot());
+
             System.out.println(accounts.getGmail());
-            System.out.println(accounts.getUser());
+            System.out.println(accounts.getPass());
 
             // Bước 3: thực thi câu lệnh SQL
             listAccounts = ps.executeUpdate();
@@ -373,28 +408,28 @@ public class DAO {
         return listAccounts;
     }
 
-    public static void main(String[] args) {
-        try {
-            DAO dao = new DAO();
-            Accounts accounts = new Accounts("Quang", "123", 0, 0, 0, "VanHei@gmail.com");
-
-            // Tạo kết nối đến CSDL
-            DBContext.setConnection();
-
-            // Gọi phương thức insert
-            int singup = dao.singup(accounts);
-
-            // Kiểm tra kết quả
-            if (singup > 0) {
-                System.out.println("Thêm thành công.");
-            } else {
-                System.out.println("Thêm không thành công.");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            // Đảm bảo đóng kết nối sau khi hoàn thành
-            DBContext.closeConnection();
-        }
-    }
+//    public static void main(String[] args) {
+//        try {
+//            DAO dao = new DAO();
+//            Accounts accounts = new Accounts("Quang", "123", 0, 0, 0, "VanHei@gmail.com");
+//
+//            // Tạo kết nối đến CSDL
+//            DBContext.setConnection();
+//
+//            // Gọi phương thức insert
+//            int singup = dao.singup(accounts);
+//
+//            // Kiểm tra kết quả
+//            if (singup > 0) {
+//                System.out.println("Thêm thành công.");
+//            } else {
+//                System.out.println("Thêm không thành công.");
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            // Đảm bảo đóng kết nối sau khi hoàn thành
+//            DBContext.closeConnection();
+//        }
+//    }
 }
