@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
@@ -10,59 +9,48 @@ import dao.DAO;
 import entity.Accounts;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *
+ * @author admin
+ */
 @WebServlet(name = "SignUpControl", urlPatterns = {"/signup"})
 public class SignUpControl extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         DBContext.setConnection();
         response.setContentType("text/html;charset=UTF-8");
         String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
         String gmail = request.getParameter("gmail");
-        String fullname = request.getParameter("fullname");
-        String gender = request.getParameter("gender");
-        String cccd = request.getParameter("cccd");
-        String numphone = request.getParameter("numphone");
-        String roles = request.getParameter("roles");
-        String dot = request.getParameter("dot");
-        String wot = request.getParameter("wot");
-        
-        System.out.println(user);
-        System.out.println(pass);
-        System.out.println(gmail);
-        System.out.println( fullname);
-        System.out.println(gender);
-        System.out.println(cccd);
-        System.out.println(roles);
-        System.out.println(dot);
-        System.out.println(wot);
-
+        String pass = request.getParameter("pass");
         String repass = request.getParameter("repass");
         if (!pass.equals(repass)) {
-            request.getParameter("login.jsp");
+            request.getParameter("register.jsp");
         } else {
             DAO dao = new DAO();
-            Accounts accounts = dao.checkAccountsExits(user);
-            
-            if (accounts == null) {
-                Date thoigianhieuluccuamaxacthuc = null;
+            Accounts Accounts = dao.checkAccountsExits(user);
+            if (Accounts == null) {
                 // được đăng kí
-                Accounts acc = new Accounts(user, pass, gender, gender, repass, wot, fullname, dot, gender, numphone, cccd, gmail, roles, dot, wot, repass, fullname, gmail);
-                dao.singup(acc);
-                response.sendRedirect("home");
 
             } else {
                 // đẩy về trang register.jsp
-
-                response.sendRedirect("login.jsp");
+                dao.singup( user, pass, gmail);
+                response.sendRedirect("home");
             }
 
         }
@@ -70,18 +58,40 @@ public class SignUpControl extends HttpServlet {
         //signup
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
