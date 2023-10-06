@@ -20,9 +20,9 @@
                 --header-color: #151b49;
                 --footer-color: #d2d6f4;
             }
-.card {
-            width: 100%;
-        }
+            .card {
+                width: 100%;
+            }
             body {
                 padding: 0px;
                 margin: 0px;
@@ -103,6 +103,68 @@
                 <a class="navbar-brand mr-auto" href="#"><img src="2x/logo@2x.png" height="30px"
                                                               width="19,69px"></a>
                 <div class="collapse navbar-collapse" id="Navbar">
+
+                    <c:if test="${sessionScope.acc.roles == 3}">
+                        <ul class="navbar-nav mr-auto ">
+                            <li class="nav-item active"><a class="nav-link" href="#">
+                                    Quản lý tài khoản</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Quản lý bài đăng</a></li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${sessionScope.acc.roles == 2}">
+                        <ul class="navbar-nav">
+                            <li class="nav-item active"><a class="nav-link" href="#"><span
+                                        class="fa fa-building fa-lg"></span>
+                                    Căn hộ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span> Phòng
+                                    trọ</a></li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-text"><a class="nav-link" href="#">
+                                    Đăng bài</a></li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${sessionScope.acc.roles == 1}">
+                        <ul class="navbar-nav mr-auto ">
+                            <li class="nav-item active"><a class="nav-link" href="#"><span
+                                        class="fa fa-building fa-lg"></span>
+                                    Căn hộ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span> Phòng
+                                    trọ</a></li>
+                        </ul>
+                    </c:if>
+                    <!-- login sign up -->
+                    <!--<span class="navbar-text">
+                        <h5>Hello + }</h5>
+                        </span>-->
+                    <c:if test="${sessionScope.acc == null}">
+                        <ul class="navbar-nav mr-auto ">
+                            <li class="nav-item active"><a class="nav-link" href="#"><span
+                                        class="fa fa-building fa-lg"></span>
+                                    Căn hộ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span> Phòng
+                                    trọ</a></li>
+                        </ul>
+                        <span class="navbar-text">
+                            <a href="#" style="color:gray">Guest</a>
+                        </span>
+                        <span class="navbar-text">
+                            <a href="login.jsp">Login</a>
+                        </span>
+                        <span class="navbar-text">
+                            <a href="register.jsp">Register</a>
+                        </span>
+                    </c:if>
+
+                    <c:if test="${sessionScope.acc != null}">
+                        <span class="navbar-text">
+                            <a href="#" style="color:gray">${sessionScope.acc.fullname}</a>
+                        </span>
+                        <span class="navbar-text">
+                            <a href="logout">Logout</a>
+                        </span>
+                    </c:if>
+                    =======
                     <ul class="navbar-nav mr-auto ">
                         <li class="nav-item active"><a class="nav-link" href="#"><span
                                     class="fa fa-building fa-lg"></span>
@@ -117,6 +179,7 @@
                     <span class="navbar-text">
                         <a href="register.jsp">Register</a>
                     </span>
+
                 </div>
             </div>
         </nav>
@@ -227,7 +290,7 @@
                                                 <i id="heart-icon" class="far fa-heart"></i>
                                             </a>
                                         </div>
-                                        
+
 
 
                                     </div>
